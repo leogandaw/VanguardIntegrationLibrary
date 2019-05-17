@@ -40,6 +40,7 @@ public class Vanguard {
                 if(vanguardInstance==null) {
                     vanguardInstance = new Vanguard();
                 }
+
             }
         }
         return vanguardInstance;
