@@ -1,5 +1,6 @@
 package id.co.vostra.vanguard.library.modules.vanguard;
 
+import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,6 +19,8 @@ import static android.content.ContentValues.TAG;
 public class Vanguard {
 
     private Context context;
+//    private static volatile Vanguard vanguardInstance;
+    @SuppressLint("StaticFieldLeak")
     private static volatile Vanguard vanguardInstance;
     private ServiceConnection serviceConnection;
     private IVanguardRemoteService service;
@@ -49,7 +52,7 @@ public class Vanguard {
     private void initialize(Context context) {
         this.context = context;
 
-
+        startServiceHost();
         serviceConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
@@ -65,12 +68,22 @@ public class Vanguard {
             }
         };
 
-        Intent i = new Intent("id.co.vostra.vanguard.byod.modules.services.ForegroundService");
-        i.setPackage("id.co.vostra.vanguard.byod");
+        Intent i = new Intent("id.co.vostra.vanguard.ext.modules.services.ForegroundService");
+        i.setPackage("id.co.vostra.vanguard.ext");
         context.bindService(i, serviceConnection, Context.BIND_AUTO_CREATE);
 
     }
 
+    private void startServiceHost(){
+        final Intent intent=new Intent();
+        intent.setAction("id.co.vostra.vanguard.ext.intent.action.RESTART_SERVICE");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intent.setComponent(
+                new ComponentName("id.co.vostra.vanguard.ext","id.co.vostra.vanguard.ext.modules.boot.BootReceiver"));
+        context.sendBroadcast(intent);
+    }
+
+    @SuppressLint("StaticFieldLeak")
     public void reportLog(){
 
         new AsyncTask<Void, Void, Void>() {
