@@ -9,11 +9,21 @@
 //    }
 //}
 
+
 //apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.jfrog.bintray'
+
+repositories {
+    mavenCentral()
+    google()
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
 group = "id.co.vostra.vanguard.library"
+version = "1.0.0"
 
 //ext {
 //    bintrayRepo = 'maven'
