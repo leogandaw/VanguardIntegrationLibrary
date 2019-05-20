@@ -9,11 +9,11 @@
 //    }
 //}
 
-apply plugin: 'com.novoda.bintray-release'
+//apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
-//apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.github.dcendents.android-maven'
 //apply plugin: 'com.jfrog.bintray'
-
+group = "id.co.vostra.vanguard.library"
 
 //ext {
 //    bintrayRepo = 'maven'
@@ -40,21 +40,21 @@ apply plugin: 'com.android.library'
 //}
 
 
-publish {
-
-    def groupProjectID = 'id.co.vostra.vanguard.library'
-    def artifactProjectID = 'lib'
-    def publishVersionID = '1.0.0'
-
-    userOrg = 'vostra'
-    repoName = 'VostraLib'
-    groupId = groupProjectID
-    artifactId = artifactProjectID
-    publishVersion = publishVersionID
-    desc = 'Vostra Library'
-    website = 'https://github.com/vostra/VanguardIntegrationLibrary.git'
-
-}
+//publish {
+//
+//    def groupProjectID = 'id.co.vostra.vanguard.library'
+//    def artifactProjectID = 'lib'
+//    def publishVersionID = '1.0.0'
+//
+//    userOrg = 'vostra'
+//    repoName = 'VostraLib'
+//    groupId = groupProjectID
+//    artifactId = artifactProjectID
+//    publishVersion = publishVersionID
+//    desc = 'Vostra Library'
+//    website = 'https://github.com/vostra/VanguardIntegrationLibrary.git'
+//
+//}
 
 android {
     compileSdkVersion 28
