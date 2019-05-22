@@ -22,8 +22,8 @@ repositories {
     maven { url "https://jitpack.io" }
 }
 
-group = "id.co.vostra.vanguard.library"
-version = "1.0.0"
+group = "com.github.vostra"
+version = "1.0.1"
 
 //ext {
 //    bintrayRepo = 'maven'
@@ -73,8 +73,8 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
 
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

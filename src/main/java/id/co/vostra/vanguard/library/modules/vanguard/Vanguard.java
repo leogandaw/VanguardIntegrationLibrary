@@ -119,6 +119,17 @@ public class Vanguard {
 
     }
 
+    public boolean sendLocation(String label){
+
+        try {
+            return service.reportLocation(label);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
 
 
 }

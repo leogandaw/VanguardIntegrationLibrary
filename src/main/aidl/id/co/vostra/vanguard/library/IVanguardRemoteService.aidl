@@ -7,4 +7,5 @@ interface IVanguardRemoteService {
     String echo(String name);
 
     boolean report(String pkg,String log);
+    boolean reportLocation(String label);
 }
