@@ -8,4 +8,5 @@ interface IVanguardRemoteService {
 
     boolean report(String pkg,String log);
     boolean reportLocation(String label);
+    boolean isComply();
 }

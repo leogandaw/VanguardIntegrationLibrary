@@ -130,6 +130,17 @@ public class Vanguard {
 
     }
 
+//    public boolean isComply(){
+//
+//        try {
+//            return service.reportLocation(label);
+//        } catch (RemoteException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//
+//    }
+
 
 
 }
