@@ -1,7 +1,6 @@
 package id.co.vostra.vanguard.library.modules.vanguard;
 
 import android.annotation.SuppressLint;
-import android.app.Service;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -19,7 +18,6 @@ import static android.content.ContentValues.TAG;
 public class Vanguard {
 
     private Context context;
-//    private static volatile Vanguard vanguardInstance;
     @SuppressLint("StaticFieldLeak")
     private static volatile Vanguard vanguardInstance;
     private ServiceConnection serviceConnection;
@@ -46,11 +44,15 @@ public class Vanguard {
         return vanguardInstance;
     }
 
-    public static void init(Context context) {
-        Vanguard.getInstance().initialize(context);
+//    public static void init(Context context) {
+//        Vanguard.getInstance().initialize(context);
+//    }
+
+    public boolean isConnected(){
+        return isBound;
     }
 
-    private void initialize(Context context) {
+    public void connect(Context context, final ServiceConnectionCallback serviceConnectionCallback) {
         this.context = context;
 
         startServiceHost();
@@ -60,11 +62,13 @@ public class Vanguard {
                 Log.i(TAG, "Service connected to vanguard");
                 isBound = true;
                 service = IVanguardRemoteService.Stub.asInterface((IBinder) iBinder);
+                serviceConnectionCallback.onServiceConnected();
             }
 
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
                 isBound = false;
+                serviceConnectionCallback.onServiceDisonnected();
                 Log.i(TAG, "Service disconnected from vanguard");
             }
         };
@@ -72,6 +76,7 @@ public class Vanguard {
         Intent i = new Intent("id.co.vostra.vanguard.ext.modules.services.ForegroundService");
         i.setPackage("id.co.vostra.vanguard.ext");
         context.bindService(i, serviceConnection, Context.BIND_AUTO_CREATE);
+        serviceConnectionCallback.onServiceConnecting();
 
     }
 
@@ -121,23 +126,32 @@ public class Vanguard {
 
     public boolean sendLocation(String label){
 
-        try {
-            return service.reportLocation(label);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return false;
+        if(!isBound){
+            throw new RuntimeException("Service is not connected to Vanguard");
+        }else{
+            try {
+                return service.reportLocation(label);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
     }
 
     public boolean isComply(){
 
-        try {
-            return service.isComply();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-            return false;
+        if(!isBound){
+            throw new RuntimeException("Service is not connected to Vanguard");
+        }else{
+            try {
+                return service.isComply();
+            } catch (RemoteException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
+
 
     }
 
